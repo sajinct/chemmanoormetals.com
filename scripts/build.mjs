@@ -1,7 +1,15 @@
-import { cp, mkdir, readdir, stat } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { cp, lstat, mkdir, readdir, realpath, rm, stat } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
 const output = resolve(root, 'dist');
+// Clean only the verified generated-output directory, never a symlink or another path.
+if (dirname(output) !== root) throw new Error('Build output must be a direct child of the project.');
+const existingOutput = await lstat(output).catch(error => { if (error.code !== 'ENOENT') throw error; });
+if (existingOutput) {
+  if (existingOutput.isSymbolicLink() || !existingOutput.isDirectory()) throw new Error('Build output must be a regular directory.');
+  if (await realpath(output) !== resolve(await realpath(root), 'dist')) throw new Error('Build output resolves outside the project.');
+  await rm(output, { recursive: true });
+}
 await mkdir(output, { recursive: true });
 const allowedFiles = ['index.html', '404.html', 'robots.txt', 'sitemap.xml'];
 const allowedDirectories = ['assets', 'products', 'company', 'automatic-shutters', 'automatic-gates', 'moving-pergola-roof', 'perforated-shutters', 'photo-gallery', 'video-gallery', 'profile', 'clients-feedback', 'contacts'];

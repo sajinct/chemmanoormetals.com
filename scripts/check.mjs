@@ -4,6 +4,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { resolve, dirname, extname } from 'node:path';
 import { execFileSync } from 'node:child_process';
 const root = resolve(import.meta.dirname, '..');
+const siteUrl = (process.env.SITE_URL || 'https://sajinct.github.io/chemmanoormetals.com').replace(/\/+$/, '');
 const routes = ['', 'products', 'company', 'automatic-shutters', 'automatic-gates', 'moving-pergola-roof', 'perforated-shutters', 'photo-gallery', 'video-gallery', 'profile', 'clients-feedback', 'contacts'];
 const errors = [];
 let references = 0;
@@ -17,7 +18,8 @@ for (const [file, html] of contents) {
   if (!html.includes('<html lang="en"')) fail('Missing document language');
   if (!html.includes('name="description"')) fail('Missing description');
   if (!html.includes('name="viewport"')) fail('Missing responsive viewport');
-  if (!html.includes('rel="canonical"')) fail('Missing canonical URL');
+  const routePath = route.replaceAll('\\', '/').replace(/index\.html$/, '');
+  if (!html.includes(`rel="canonical" href="${siteUrl}/${routePath}"`)) fail('Incorrect canonical URL');
   if (/lorem ipsum|lucky jet|aviator|javascript:|href="#"|user-scalable=no/i.test(html)) fail('Placeholder, compromised copy or inaccessible source pattern');
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
   if (new Set(ids).size !== ids.length) fail('Duplicate element IDs');
@@ -56,6 +58,11 @@ for (const match of css.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g)) {
   }
 }
 assert.equal((await readdir(resolve(root, 'assets/gallery'))).filter(f => f.endsWith('.jpg')).length, 23, 'Expected all 23 original gallery photos');
+const notFound = await readFile(resolve(root, '404.html'), 'utf8');
+assert.ok(notFound.includes(`href="${siteUrl}/"`), '404 home link must retain the project URL');
+const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
+for (const route of routes) assert.ok(sitemap.includes(`<loc>${siteUrl}/${route ? route + '/' : ''}</loc>`), `Missing sitemap route: ${route}`);
+assert.ok((await readFile(resolve(root, 'robots.txt'), 'utf8')).includes(`Sitemap: ${siteUrl}/sitemap.xml`), 'Incorrect sitemap address');
 for (const file of ['assets/main.js', 'scripts/serve.mjs', 'scripts/build.mjs', 'scripts/generate-pages.mjs']) execFileSync(process.execPath, ['--check', resolve(root, file)], { stdio: 'pipe' });
 if (errors.length) { console.error(errors.join('\n')); process.exitCode = 1; }
 else console.log(`PASS: ${routes.length} pages, ${references} local references, heading and HTML structure, IDs, fragments, all gallery assets and JavaScript syntax.`);

@@ -2,7 +2,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
-const siteUrl = process.env.SITE_URL || 'https://chemmanoor-metals.sajinct.chatgpt.site';
+const siteUrl = (process.env.SITE_URL || 'https://sajinct.github.io/chemmanoormetals.com').replace(/\/+$/, '');
 let home = await readFile(resolve(root, 'index.html'), 'utf8');
 const escape = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const prefix = html => html.replace(/(href|src)="(?!https?:|mailto:|tel:|#)([^\"]*)"/g, (_, attr, path) => `${attr}="../${path === './' ? '' : path}"`);
@@ -94,7 +94,7 @@ home = home.replace(/\s*<link rel="canonical"[^>]*>/g, '').replace(/\s*<script t
 const business = { '@context': 'https://schema.org', '@type': 'HomeAndConstructionBusiness', name: 'Chemmanoor Metals', url: siteUrl, telephone: '+919747070066', email: 'mail@chemmanoormetals.com', foundingDate: '1975', address: { '@type': 'PostalAddress', streetAddress: 'Perakam P.O, Chavakkad Via', addressLocality: 'Thrissur', addressRegion: 'Kerala', postalCode: '680505', addressCountry: 'IN' }, sameAs: ['https://www.facebook.com/Chemmanoor-Metals-162917213892981/'] };
 home = home.replace('</head>', `  <link rel="canonical" href="${siteUrl}/">\n  <script type="application/ld+json">${JSON.stringify(business)}</script>\n</head>`);
 await writeFile(resolve(root, 'index.html'), home);
-await writeFile(resolve(root, '404.html'), `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page not found | Chemmanoor Metals</title><meta name="robots" content="noindex"><style>body{font-family:Arial,sans-serif;color:#222824;text-align:center;padding:12vh 24px;background:#f3f4ef}h1{font-size:6rem;margin:0}h2{font-size:2rem}a{display:inline-block;padding:16px 24px;background:#ff783c;color:#222824;font-weight:bold;text-decoration:none;margin-top:20px}</style></head><body><main><h1>404</h1><h2>This opening leads elsewhere.</h2><p>The page you’re looking for is unavailable.</p><a href="/">Back to Chemmanoor Metals ↗</a></main></body></html>`);
+await writeFile(resolve(root, '404.html'), `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page not found | Chemmanoor Metals</title><meta name="robots" content="noindex"><style>body{font-family:Arial,sans-serif;color:#222824;text-align:center;padding:12vh 24px;background:#f3f4ef}h1{font-size:6rem;margin:0}h2{font-size:2rem}a{display:inline-block;padding:16px 24px;background:#ff783c;color:#222824;font-weight:bold;text-decoration:none;margin-top:20px}</style></head><body><main><h1>404</h1><h2>This opening leads elsewhere.</h2><p>The page you’re looking for is unavailable.</p><a href="${escape(siteUrl)}/">Back to Chemmanoor Metals ↗</a></main></body></html>`);
 const urls = ['', ...pages.map(p => p.slug + '/')];
 await writeFile(resolve(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(path => `<url><loc>${siteUrl}/${path}</loc></url>`).join('')}</urlset>\n`);
 await writeFile(resolve(root, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml\n`);

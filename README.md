@@ -2,6 +2,16 @@
 
 A modern, responsive rebuild using plain HTML, CSS and JavaScript. No framework, database or runtime package dependencies.
 
+[Live website](https://sajinct.github.io/chemmanoormetals.com/) · [GitHub repository](https://github.com/sajinct/chemmanoormetals.com)
+
+## GitHub Pages
+
+Pushing to `main` runs `.github/workflows/pages.yml`, which generates pages with the configured Pages URL, validates them, builds a clean `dist/` directory and publishes only those website files. The workflow can also be started manually from the repository’s Actions tab.
+
+The repository uses **Settings → Pages → Source: GitHub Actions**. No custom domain or DNS change is required for the project URL above. The error page’s home link includes the project path, so it also works from nested missing URLs.
+
+Only the public website output is served by Pages. This public source repository separately contains the authoring scripts, documentation and non-secret metadata for the earlier Sites review copy.
+
 ## Run locally
 
 Open `index.html` directly, or run `npm run dev` and visit `http://127.0.0.1:4173/`. Node.js is only needed for the optional development/build helpers. No package installation is required.
@@ -34,7 +44,7 @@ npm run check
 npm run build
 ```
 
-The private review version uses its Sites origin for canonical links and the sitemap. Domain/DNS changes have not been made.
+The default metadata targets GitHub Pages. The deployment workflow automatically uses GitHub’s configured Pages URL, including a future custom domain if one is configured. The earlier private Sites review remains a separate deployment. Domain/DNS changes have not been made.
 
 ## Contact and media
 
