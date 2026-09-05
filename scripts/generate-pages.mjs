@@ -2,7 +2,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
-const siteUrl = process.env.SITE_URL || 'https://chemmanoor-metals.pearly-mite-0821.chatgpt.site';
+const siteUrl = process.env.SITE_URL || 'https://chemmanoor-metals.sajinct.chatgpt.site';
 let home = await readFile(resolve(root, 'index.html'), 'utf8');
 const escape = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const prefix = html => html.replace(/(href|src)="(?!https?:|mailto:|tel:|#)([^\"]*)"/g, (_, attr, path) => `${attr}="../${path === './' ? '' : path}"`);
