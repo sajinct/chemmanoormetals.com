@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://chemmanoor-metals.pearly-mite-0821.chatgpt.site/sitemap.xml
