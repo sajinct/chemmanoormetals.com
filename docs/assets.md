@@ -5,6 +5,7 @@ All business imagery and the logo were obtained from the user-requested original
 | Local asset | Source |
 | --- | --- |
 | `logo.jpg` | https://chemmanoormetals.com/wp-content/uploads/2018/04/logo.jpg |
+| `favicon.jpg` | https://chemmanoormetals.com/wp-content/uploads/2018/04/favicon.jpg — supplied by the user on 6 September 2026 |
 | `banner-3.jpg`, `pergola.jpg` | https://chemmanoormetals.com/wp-content/uploads/2019/10/IMG-20191014-WA0025.jpg |
 | `hero-original.jpg` | https://chemmanoormetals.com/wp-content/uploads/2024/03/1.jpg |
 | `banner-2.jpg` | https://chemmanoormetals.com/wp-content/uploads/2024/03/2.jpg |
