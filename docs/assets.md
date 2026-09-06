@@ -7,6 +7,7 @@ All business imagery and the logo were obtained from the user-requested original
 | `logo.jpg` | https://chemmanoormetals.com/wp-content/uploads/2018/04/logo.jpg |
 | `favicon.jpg` | https://chemmanoormetals.com/wp-content/uploads/2018/04/favicon.jpg — supplied by the user on 6 September 2026 |
 | `favicon-rounded.svg` | Embeds the supplied `favicon.jpg` unchanged inside a rounded-square clipping path, with transparent corners. |
+| `whatsapp-icon-square.svg` | https://chemmanoormetals.com/wp-content/plugins/click-to-chat-for-whatsapp/./new/inc/assets/img/whatsapp-icon-square.svg — supplied by the user; used unchanged for the floating WhatsApp button. |
 | `banner-3.jpg`, `pergola.jpg` | https://chemmanoormetals.com/wp-content/uploads/2019/10/IMG-20191014-WA0025.jpg |
 | `hero-original.jpg` | https://chemmanoormetals.com/wp-content/uploads/2024/03/1.jpg |
 | `banner-2.jpg` | https://chemmanoormetals.com/wp-content/uploads/2024/03/2.jpg |
